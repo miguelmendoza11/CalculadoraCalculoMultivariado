@@ -22,7 +22,7 @@ GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini
 st.markdown("""
 <style>
     .stApp {
-        background: #f5f5f5;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
     .main {
         background-color: rgba(255, 255, 255, 0.95);
@@ -56,14 +56,14 @@ st.markdown("""
     }
     /* Sidebar styling */
     [data-testid="stSidebar"] {
-        background: #f5f5f5 !important;
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
     }
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3,
     [data-testid="stSidebar"] label,
     [data-testid="stSidebar"] p {
-        color: #333 !important;
+        color: white !important;
     }
     [data-testid="stSidebar"] .stButton button {
         background-color: #f8f9fa !important;
@@ -171,7 +171,7 @@ with st.sidebar:
         /* Estilos específicos para botones de funciones de ejemplo */
         [data-testid="stSidebar"] div.stButton > button,
         div.stButton > button {
-            background-color: #e2e2e2 !important;
+            background-color: #f8f9fa !important;
             color: #212529 !important;
             font-weight: 700 !important;
             font-size: 0.95rem !important;
