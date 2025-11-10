@@ -22,7 +22,7 @@ GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini
 st.markdown("""
 <style>
     .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
     }
     .main {
         background-color: rgba(255, 255, 255, 0.95);
@@ -30,7 +30,7 @@ st.markdown("""
         border-radius: 15px;
     }
     h1 {
-        color: #667eea !important;
+        color: #4a5568 !important;
         text-align: center;
         font-weight: 700;
     }
@@ -51,12 +51,12 @@ st.markdown("""
         background-color: #e9ecef;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #667eea !important;
+        background-color: #4a5568 !important;
         color: white !important;
     }
     /* Sidebar styling */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(180deg, #4a5568 0%, #2d3748 100%);
     }
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
@@ -69,15 +69,15 @@ st.markdown("""
         background-color: #f8f9fa !important;
         color: #212529 !important;
         font-weight: 700 !important;
-        border: 2px solid #667eea !important;
+        border: 2px solid #4a5568 !important;
         text-align: center !important;
         font-size: 0.95rem !important;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
     }
     [data-testid="stSidebar"] .stButton button:hover {
-        background-color: #667eea !important;
+        background-color: #4a5568 !important;
         color: white !important;
-        border: 2px solid #667eea !important;
+        border: 2px solid #4a5568 !important;
     }
     [data-testid="stSidebar"] input,
     [data-testid="stSidebar"] .stTextInput input,
@@ -105,14 +105,14 @@ st.markdown("""
     }
     /* Títulos y subtítulos */
     h2, h3, h4 {
-        color: #667eea !important;
+        color: #4a5568 !important;
         font-weight: 600 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # Título
-st.markdown("<h1 style='color: #667eea; text-align: center; font-size: 2.5rem;'>📊 Calculadora de Cálculo Multivariable</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: #4a5568; text-align: center; font-size: 2.5rem;'>📊 Calculadora de Cálculo Multivariable</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: #555; font-size: 1.1rem; font-weight: 500;'>Visualización, Cálculo e Interpretación de Funciones Multivariables</p>", unsafe_allow_html=True)
 st.markdown("---")
 
@@ -175,7 +175,7 @@ with st.sidebar:
             color: #212529 !important;
             font-weight: 700 !important;
             font-size: 0.95rem !important;
-            border: 2px solid #667eea !important;
+            border: 2px solid #4a5568 !important;
             padding: 0.7rem 1rem !important;
             width: 100% !important;
             margin-bottom: 0.5rem !important;
@@ -189,24 +189,24 @@ with st.sidebar:
         }
         [data-testid="stSidebar"] div.stButton > button:hover,
         div.stButton > button:hover {
-            background-color: #667eea !important;
+            background-color: #4a5568 !important;
             color: white !important;
-            border: 2px solid #667eea !important;
+            border: 2px solid #4a5568 !important;
             transform: translateY(-2px) !important;
-            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3) !important;
+            box-shadow: 0 4px 8px rgba(74, 85, 104, 0.3) !important;
         }
         [data-testid="stSidebar"] div.stButton > button:focus,
         div.stButton > button:focus {
             color: #212529 !important;
             background-color: #f8f9fa !important;
-            border: 2px solid #667eea !important;
+            border: 2px solid #4a5568 !important;
             outline: none !important;
         }
         [data-testid="stSidebar"] div.stButton > button:active,
         div.stButton > button:active {
             color: white !important;
-            background-color: #5a6fd8 !important;
-            border: 2px solid #5a6fd8 !important;
+            background-color: #2d3748 !important;
+            border: 2px solid #2d3748 !important;
         }
         /* Forzar el color del texto en todos los elementos internos */
         [data-testid="stSidebar"] div.stButton > button *,
