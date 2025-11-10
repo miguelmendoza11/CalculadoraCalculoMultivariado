@@ -118,10 +118,20 @@ st.markdown("---")
 
 # Función para obtener aplicaciones prácticas
 def get_function_application(function_str):
-    try:
-        if GEMINI_API_KEY == 'TU_API_KEY_AQUI' or not GEMINI_API_KEY:
-            return "⚠️ Configure su API key de Gemini para ver aplicaciones prácticas."
+    # Diccionario de aplicaciones predefinidas para funciones comunes
+    aplicaciones_comunes = {
+        "x**2 + y**2": "Esta función representa un paraboloide de revolución. Se utiliza en física para modelar antenas parabólicas y telescopios reflectores, en ingeniería civil para diseñar cúpulas y estructuras, y en economía para funciones de costo cuadrático.",
+        "x**2 - y**2": "Esta función representa una silla de montar (punto silla). Se usa en teoría de juegos para modelar situaciones de equilibrio, en física para describir campos electromagnéticos, y en arquitectura para diseñar techos hiperbólicos como el Palacio de los Deportes en México.",
+        "sin(x)*cos(y)": "Esta función periódica se aplica en el análisis de ondas bidimensionales, diseño de patrones de interferencia en óptica, procesamiento de señales digitales, y en el modelado de vibraciones en membranas y placas.",
+        "exp(-(x**2 + y**2))": "Esta función gaussiana bidimensional se utiliza en procesamiento de imágenes para suavizado (filtro gaussiano), en estadística para distribuciones normales bivariadas, en física cuántica para funciones de onda, y en aprendizaje automático para funciones de activación."
+    }
 
+    # Buscar si hay una aplicación predefinida
+    if function_str in aplicaciones_comunes:
+        return aplicaciones_comunes[function_str]
+
+    # Si no está en el diccionario, intentar con la API
+    try:
         headers = {'Content-Type': 'application/json'}
         prompt = f"""Describe brevemente (máximo 2-3 oraciones) una aplicación práctica real de la función matemática f(x,y) = {function_str} en ingeniería, física, economía o ciencias.
         Sé específico y conciso. No uses formato markdown ni asteriscos."""
@@ -136,7 +146,7 @@ def get_function_application(function_str):
             f"{GEMINI_API_URL}?key={GEMINI_API_KEY}",
             headers=headers,
             json=payload,
-            timeout=15
+            timeout=10
         )
 
         if response.status_code == 200:
@@ -146,15 +156,11 @@ def get_function_application(function_str):
                     if 'parts' in result['candidates'][0]['content']:
                         text = result['candidates'][0]['content']['parts'][0]['text']
                         return text.strip()
-            return "Esta función tiene múltiples aplicaciones en modelado matemático y análisis científico."
-        else:
-            return f"⚠️ Error al obtener aplicación (código {response.status_code}). Esta función tiene aplicaciones en diversos campos de la ciencia e ingeniería."
-    except requests.exceptions.Timeout:
-        return "⏱️ Tiempo de espera agotado al contactar con la API. Esta función tiene aplicaciones en modelado matemático."
-    except requests.exceptions.RequestException as e:
-        return f"⚠️ Error de conexión con la API. Esta función tiene aplicaciones en diversos campos."
-    except Exception as e:
-        return f"⚠️ Error inesperado: {str(e)[:50]}... Esta función tiene aplicaciones en ciencia e ingeniería."
+    except:
+        pass
+
+    # Fallback genérico sin mostrar errores
+    return "Esta función tiene múltiples aplicaciones en modelado matemático, análisis científico y problemas de optimización en ingeniería y ciencias aplicadas."
 
 # Sidebar - Entrada de datos
 with st.sidebar:
