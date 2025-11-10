@@ -22,7 +22,7 @@ GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini
 st.markdown("""
 <style>
     .stApp {
-        background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+        background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
     }
     .main {
         background-color: rgba(255, 255, 255, 0.95);
@@ -51,40 +51,40 @@ st.markdown("""
         background-color: #e9ecef;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #4a5568 !important;
+        background-color: #718096 !important;
         color: white !important;
     }
     /* Sidebar styling */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #4a5568 0%, #2d3748 100%);
+        background: linear-gradient(180deg, #cbd5e0 0%, #a0aec0 100%);
     }
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3,
     [data-testid="stSidebar"] label,
     [data-testid="stSidebar"] p {
-        color: white !important;
+        color: #2d3748 !important;
     }
     [data-testid="stSidebar"] .stButton button {
         background-color: #f8f9fa !important;
         color: #212529 !important;
         font-weight: 700 !important;
-        border: 2px solid #4a5568 !important;
+        border: 2px solid #718096 !important;
         text-align: center !important;
         font-size: 0.95rem !important;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
     }
     [data-testid="stSidebar"] .stButton button:hover {
-        background-color: #4a5568 !important;
+        background-color: #718096 !important;
         color: white !important;
-        border: 2px solid #4a5568 !important;
+        border: 2px solid #718096 !important;
     }
     [data-testid="stSidebar"] input,
     [data-testid="stSidebar"] .stTextInput input,
     [data-testid="stSidebar"] .stNumberInput input {
         background-color: rgba(255, 255, 255, 0.95) !important;
         color: #333 !important;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(45, 55, 72, 0.2);
     }
     [data-testid="stSidebar"] input::placeholder {
         color: #999 !important;
@@ -120,25 +120,25 @@ st.markdown("---")
 def get_function_application(function_str):
     try:
         if GEMINI_API_KEY == 'TU_API_KEY_AQUI' or not GEMINI_API_KEY:
-            return "Configure su API key de Gemini para ver aplicaciones prácticas."
-        
+            return "⚠️ Configure su API key de Gemini para ver aplicaciones prácticas."
+
         headers = {'Content-Type': 'application/json'}
-        prompt = f"""Describe brevemente (máximo 2-3 oraciones) una aplicación práctica real de la función matemática f(x,y) = {function_str} en ingeniería, física, economía o ciencias. 
+        prompt = f"""Describe brevemente (máximo 2-3 oraciones) una aplicación práctica real de la función matemática f(x,y) = {function_str} en ingeniería, física, economía o ciencias.
         Sé específico y conciso. No uses formato markdown ni asteriscos."""
-        
+
         payload = {
             "contents": [{
                 "parts": [{"text": prompt}]
             }]
         }
-        
+
         response = requests.post(
             f"{GEMINI_API_URL}?key={GEMINI_API_KEY}",
             headers=headers,
             json=payload,
             timeout=15
         )
-        
+
         if response.status_code == 200:
             result = response.json()
             if 'candidates' in result and len(result['candidates']) > 0:
@@ -146,14 +146,19 @@ def get_function_application(function_str):
                     if 'parts' in result['candidates'][0]['content']:
                         text = result['candidates'][0]['content']['parts'][0]['text']
                         return text.strip()
-        
-        return "Esta función tiene múltiples aplicaciones en modelado matemático y análisis científico."
-    except:
-        return "Esta función tiene aplicaciones en diversos campos de la ciencia e ingeniería."
+            return "Esta función tiene múltiples aplicaciones en modelado matemático y análisis científico."
+        else:
+            return f"⚠️ Error al obtener aplicación (código {response.status_code}). Esta función tiene aplicaciones en diversos campos de la ciencia e ingeniería."
+    except requests.exceptions.Timeout:
+        return "⏱️ Tiempo de espera agotado al contactar con la API. Esta función tiene aplicaciones en modelado matemático."
+    except requests.exceptions.RequestException as e:
+        return f"⚠️ Error de conexión con la API. Esta función tiene aplicaciones en diversos campos."
+    except Exception as e:
+        return f"⚠️ Error inesperado: {str(e)[:50]}... Esta función tiene aplicaciones en ciencia e ingeniería."
 
 # Sidebar - Entrada de datos
 with st.sidebar:
-    st.markdown("<h2 style='color: white; font-size: 1.5rem;'>🔢 Función</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #2d3748; font-size: 1.5rem;'>🔢 Función</h2>", unsafe_allow_html=True)
     
     func_str = st.text_input(
         "Ingrese la función f(x,y):",
@@ -162,9 +167,9 @@ with st.sidebar:
         label_visibility="collapsed"
     )
     
-    st.markdown("<p style='color: rgba(255,255,255,0.8); font-size: 0.85rem; margin-top: -10px;'>Ejemplo: x**2 + y**2, sin(x)*cos(y)</p>", unsafe_allow_html=True)
-    
-    st.markdown("<p style='color: white; font-weight: 600; font-size: 1.1rem; margin-top: 20px; margin-bottom: 10px;'>Funciones de ejemplo:</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: rgba(45, 55, 72, 0.8); font-size: 0.85rem; margin-top: -10px;'>Ejemplo: x**2 + y**2, sin(x)*cos(y)</p>", unsafe_allow_html=True)
+
+    st.markdown("<p style='color: #2d3748; font-weight: 600; font-size: 1.1rem; margin-top: 20px; margin-bottom: 10px;'>Funciones de ejemplo:</p>", unsafe_allow_html=True)
     
     button_style = """
         <style>
@@ -175,7 +180,7 @@ with st.sidebar:
             color: #212529 !important;
             font-weight: 700 !important;
             font-size: 0.95rem !important;
-            border: 2px solid #4a5568 !important;
+            border: 2px solid #718096 !important;
             padding: 0.7rem 1rem !important;
             width: 100% !important;
             margin-bottom: 0.5rem !important;
@@ -189,24 +194,24 @@ with st.sidebar:
         }
         [data-testid="stSidebar"] div.stButton > button:hover,
         div.stButton > button:hover {
-            background-color: #4a5568 !important;
+            background-color: #718096 !important;
             color: white !important;
-            border: 2px solid #4a5568 !important;
+            border: 2px solid #718096 !important;
             transform: translateY(-2px) !important;
-            box-shadow: 0 4px 8px rgba(74, 85, 104, 0.3) !important;
+            box-shadow: 0 4px 8px rgba(113, 128, 150, 0.3) !important;
         }
         [data-testid="stSidebar"] div.stButton > button:focus,
         div.stButton > button:focus {
             color: #212529 !important;
             background-color: #f8f9fa !important;
-            border: 2px solid #4a5568 !important;
+            border: 2px solid #718096 !important;
             outline: none !important;
         }
         [data-testid="stSidebar"] div.stButton > button:active,
         div.stButton > button:active {
             color: white !important;
-            background-color: #2d3748 !important;
-            border: 2px solid #2d3748 !important;
+            background-color: #4a5568 !important;
+            border: 2px solid #4a5568 !important;
         }
         /* Forzar el color del texto en todos los elementos internos */
         [data-testid="stSidebar"] div.stButton > button *,
@@ -244,7 +249,7 @@ with st.sidebar:
             func_str = "exp(-(x**2 + y**2))"
             st.rerun()
     
-    st.markdown("<h2 style='color: white; font-size: 1.5rem; margin-top: 30px;'>📐 Rango de visualización</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #2d3748; font-size: 1.5rem; margin-top: 30px;'>📐 Rango de visualización</h2>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
         x_min = st.number_input("x min:", value=-5.0, step=0.5, label_visibility="visible")
@@ -253,7 +258,7 @@ with st.sidebar:
         x_max = st.number_input("x max:", value=5.0, step=0.5, label_visibility="visible")
         y_max = st.number_input("y max:", value=5.0, step=0.5, label_visibility="visible")
     
-    st.markdown("<h2 style='color: white; font-size: 1.5rem; margin-top: 30px;'>🎯 Punto de evaluación</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: #2d3748; font-size: 1.5rem; margin-top: 30px;'>🎯 Punto de evaluación</h2>", unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
         point_x = st.number_input("x₀:", value=1.0, step=0.1, label_visibility="visible")
